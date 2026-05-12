@@ -7,6 +7,17 @@ app = Flask(__name__)
 
 THRESHOLDS_PATH = os.path.join(os.path.dirname(__file__), "../backend/config/cropThresholds.json")
 
+# Fallback thresholds if file not found
+DEFAULT_THRESHOLDS = {
+    "banana":  {"humidity": {"medium": 60, "high": 80}, "temperature": {"medium": 25, "high": 35}},
+    "rice":    {"humidity": {"medium": 65, "high": 85}, "temperature": {"medium": 28, "high": 38}},
+    "wheat":   {"humidity": {"medium": 60, "high": 75}, "temperature": {"medium": 25, "high": 35}},
+    "onion":   {"humidity": {"medium": 55, "high": 70}, "temperature": {"medium": 25, "high": 35}},
+    "tomato":  {"humidity": {"medium": 65, "high": 85}, "temperature": {"medium": 20, "high": 30}},
+    "potato":  {"humidity": {"medium": 80, "high": 95}, "temperature": {"medium": 10, "high": 20}},
+    "default": {"humidity": {"medium": 65, "high": 80}, "temperature": {"medium": 25, "high": 35}},
+}
+
 WEIGHTS = {"humidity": 30, "temperature": 25, "days_since_harvest": 20, "rainfall": 15, "storage_method": 10}
 
 STORAGE_PENALTY = {"open_air": 1.0, "dry_warehouse": 0.6, "cold_storage": 0.2, "refrigerated_transport": 0.1}
@@ -159,8 +170,11 @@ def generate_recommendations(crop_type, risk_level, market_price_trend, temperat
 
 
 def load_thresholds():
-    with open(THRESHOLDS_PATH, "r") as f:
-        return json.load(f)
+    try:
+        with open(THRESHOLDS_PATH, "r") as f:
+            return json.load(f)
+    except Exception:
+        return DEFAULT_THRESHOLDS
 
 def get_days_since_harvest(harvest_date_str):
     try:
