@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { FaSeedling, FaMobileAlt, FaLock, FaArrowLeft } from "react-icons/fa";
+import API_BASE_URL from "./config/api";
 
 function FarmerLogin({ onLogin, onBackToLanding, onShowRegister }) {
   const [mobileNumber, setMobileNumber] = useState("");
@@ -22,7 +23,7 @@ function FarmerLogin({ onLogin, onBackToLanding, onShowRegister }) {
     setError("");
     
     try {
-      const res = await axios.get(`http://localhost:5000/farmer/mobile/${mobileNumber}`);
+      const res = await axios.get(`${API_BASE_URL}/farmer/mobile/${mobileNumber}`);
       if (res.data) {
         onLogin(res.data);
       } else {

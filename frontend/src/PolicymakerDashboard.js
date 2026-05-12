@@ -12,6 +12,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { Bar, Pie } from "react-chartjs-2";
 import "chart.js/auto";
+import API_BASE_URL from "./config/api";
 
 // jsPDF v4+ uses a named export; support both v3 and v4
 const JsPDF = jsPDF.jsPDF || jsPDF;
@@ -98,7 +99,7 @@ const PolicymakerDashboard = ({ onBackToLanding }) => {
   const fetchData = () => {
     setLoadingData(true);
     setLoadError("");
-    fetch("http://localhost:5000/weather/farmers/risk")
+    fetch(`${API_BASE_URL}/weather/farmers/risk`)
       .then((res) => {
         if (!res.ok) throw new Error(`Server error: ${res.status}`);
         return res.json();

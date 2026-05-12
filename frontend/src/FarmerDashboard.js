@@ -14,7 +14,9 @@ import {
 
 } from "react-icons/fa";
 
-const API = "http://localhost:5000";
+import API_BASE_URL from "./config/api";
+
+const API = API_BASE_URL;
 
 const colors = {
 
