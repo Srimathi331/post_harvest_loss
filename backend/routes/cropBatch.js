@@ -141,7 +141,7 @@ router.get("/:id/risk-assessment", async (req, res) => {
 
     try {
       // Call AI service for risk assessment
-      const aiResponse = await axios.post("http://localhost:8000/predict", {
+      const aiResponse = await axios.post("https://post-harvest-loss-ai.onrender.com/predict", {
         crop_type: cropBatch.cropType,
         harvest_date: cropBatch.harvestDate.toISOString().split('T')[0],
         storage_method: cropBatch.storageMethod,
