@@ -1,0 +1,20 @@
+{
+  "onion": {
+    "humidity": { "medium": 50, "high": 70 },
+    "temperature": { "high": 35 }
+  },
+  "banana": {
+    "humidity": { "medium": 60, "high": 80 },
+    "temperature": { "low": 20 }
+  },
+  "rice": {
+    "humidity": { "medium": 60, "low": 40 },
+    "temperature": { "high": 38 }
+  },
+  "wheat": {
+    "temperature": { "low": 10, "medium": 25, "high": 32 }
+  },
+  "default": {
+    "humidity": { "medium": 50, "high": 70 }
+  }
+}
