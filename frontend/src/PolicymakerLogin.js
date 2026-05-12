@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { FaLandmark, FaArrowLeft, FaLock, FaUser, FaSignInAlt } from "react-icons/fa";
-import { validatePolicymakerCredentials, IS_DEVELOPMENT } from "./config/auth";
+import { validatePolicymakerCredentials } from "./config/auth";
 
 function PolicymakerLogin({ onLogin, onBackToLanding }) {
   const [credentials, setCredentials] = useState({
@@ -22,30 +21,16 @@ function PolicymakerLogin({ onLogin, onBackToLanding }) {
     setLoading(true);
     
     try {
-      if (IS_DEVELOPMENT) {
-        // Development mode - validate against local config
-        const user = validatePolicymakerCredentials(
-          credentials.username, 
-          credentials.password
-        );
+      // Always validate locally using config/auth.js
+      const user = validatePolicymakerCredentials(
+        credentials.username,
+        credentials.password
+      );
 
-        if (user) {
-          onLogin({ ...user, name: "Policymaker" });
-        } else {
-          setError("Invalid credentials. Please try again.");
-        }
+      if (user) {
+        onLogin({ ...user, name: "Policymaker" });
       } else {
-        // Production mode - call secure API
-        const response = await axios.post('/api/auth/policymaker', {
-          username: credentials.username,
-          password: credentials.password
-        });
-
-        if (response.data.success) {
-          onLogin(response.data.user);
-        } else {
-          setError("Invalid credentials. Please try again.");
-        }
+        setError("Invalid credentials. Please try again.");
       }
     } catch (err) {
       setError("Login failed. Please try again.");
